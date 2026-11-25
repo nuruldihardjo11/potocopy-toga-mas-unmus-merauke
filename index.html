@@ -4,19 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TOGA MAS UNMUS MERAUKE - Sistem Digital Photocopy Toga Mas</title>
-<!-- Font Inter via Fontsource -->
 <link href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-800-normal.css" rel="stylesheet">
-<!-- Chart.js (grafik), JsBarcode (barcode), QRCode (pembuat QR), html5-qrcode (scan kamera) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <style>
 /* =========================================================
-   PALET WARNA: HANYA PUTIH DAN BIRU
+   PALET: PUTIH + BIRU. BORDER 1px, TANPA SHADOW TEBAL
    ========================================================= */
 :root{
   --white:#FFFFFF;
@@ -30,90 +28,55 @@
   --card:#FFFFFF;
   --text:#0A2540;
   --text-2:#5A7A99;
-  --border:#DCE7F2;
+  --border:#E5E7EB;
   --bc:#0A2540;
-  --shadow:0 1px 3px rgba(10,37,64,.06),0 10px 28px rgba(0,123,255,.08);
+  --shadow:none;
   --radius:16px;
 }
 [data-theme="dark"]{
-  --bg:#061527;
-  --bg-soft:#0B1E33;
-  --card:#0C2138;
-  --text:#EAF2FB;
-  --text-2:#93AEC8;
-  --border:#1B3550;
-  --blue:#3D9BFF;
-  --blue-dark:#6BB4FF;
-  --blue-soft:#10294A;
-  --blue-tint:#0E2540;
-  --bc:#EAF2FB;
-  --shadow:0 1px 3px rgba(0,0,0,.4),0 12px 32px rgba(0,0,0,.35);
+  --bg:#061527; --bg-soft:#0B1E33; --card:#0C2138;
+  --text:#EAF2FB; --text-2:#93AEC8; --border:#1B3550;
+  --blue:#3D9BFF; --blue-dark:#6BB4FF; --blue-soft:#10294A; --blue-tint:#0E2540;
+  --bc:#EAF2FB; --shadow:none;
 }
-
-/* =========================================================
-   BASE
-   ========================================================= */
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  font-family:'Inter',system-ui,-apple-system,sans-serif;
-  background:var(--bg);color:var(--text);line-height:1.6;
-  transition:background .25s,color .25s;
-}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .25s,color .25s}
 button,input,select{font-family:inherit}
 ::-webkit-scrollbar{width:8px;height:8px}
 ::-webkit-scrollbar-track{background:var(--bg-soft)}
 ::-webkit-scrollbar-thumb{background:var(--blue);border-radius:4px}
 
-/* =========================================================
-   NAVIGASI PUTIH BERSIH
-   ========================================================= */
+/* ===================== NAVIGASI ===================== */
 .navbar{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1000}
 [data-theme="dark"] .navbar{background:var(--card)}
 .nav-container{max-width:1400px;margin:0 auto;padding:.7rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:.75rem}
 .nav-brand{display:flex;align-items:center;gap:.65rem}
-.logo-mark{
-  width:42px;height:42px;border-radius:12px;flex:none;background:var(--blue);color:#fff;
-  display:grid;place-items:center;font-weight:800;font-size:1rem;letter-spacing:.02em;text-align:center;
-}
+.logo-mark{width:42px;height:42px;border-radius:12px;flex:none;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;font-size:1rem;letter-spacing:.02em;text-align:center}
 .logo-mark small{display:block;font-size:.44rem;font-weight:700;letter-spacing:.1em;opacity:.9}
-.brand-text b{display:block;font-size:.98rem;font-weight:800;color:var(--text);letter-spacing:.01em}
+.brand-text b{display:block;font-size:.98rem;font-weight:800;color:var(--text)}
 .brand-text span{display:block;font-size:.68rem;font-weight:600;color:var(--text-2)}
 .nav-links{display:flex;align-items:center;gap:.2rem;flex-wrap:wrap}
-.nav-links a{
-  color:var(--text-2);text-decoration:none;padding:.55rem .8rem;border-radius:10px;
-  font-size:.84rem;font-weight:600;transition:.2s;white-space:nowrap;
-}
+.nav-links a{color:var(--text-2);text-decoration:none;padding:.55rem .8rem;border-radius:10px;font-size:.84rem;font-weight:600;transition:.2s;white-space:nowrap}
 .nav-links a:hover{background:var(--blue-soft);color:var(--blue)}
 .nav-links a.active{background:var(--blue);color:#fff}
-.theme-toggle,.hamburger{
-  background:var(--bg-soft);border:1px solid var(--border);color:var(--text);
-  height:38px;border-radius:10px;cursor:pointer;font-size:.8rem;font-weight:700;
-}
+.theme-toggle,.hamburger{background:var(--bg-soft);border:1px solid var(--border);color:var(--text);height:38px;border-radius:10px;cursor:pointer;font-size:.8rem;font-weight:700}
 .theme-toggle{width:78px}
 .hamburger{display:none;width:44px;font-size:1.2rem}
 
-/* =========================================================
-   LAYOUT
-   ========================================================= */
+/* ===================== LAYOUT ===================== */
 .main-content{max-width:1400px;margin:0 auto;padding:1.5rem 1.25rem 2rem}
 .page{display:none}
 .page.active{display:block;animation:fade .3s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;box-shadow:var(--shadow);margin-bottom:1.25rem}
 .card-title{font-size:1.12rem;font-weight:800;margin-bottom:.35rem;display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}
-.card-title::before{content:"";width:5px;height:22px;border-radius:3px;background:var(--blue)}
+.card-title::before{content:"";width:5px;height:22px;border-radius:3px;background:var(--text)}
 .card-sub{font-size:.86rem;color:var(--text-2);margin-bottom:1.1rem}
 
-/* =========================================================
-   TOMBOL (SEMUA BIRU)
-   ========================================================= */
-.btn{
-  padding:.75rem 1.3rem;border:none;border-radius:11px;font-weight:700;cursor:pointer;
-  font-size:.9rem;transition:.18s;text-decoration:none;display:inline-flex;
-  align-items:center;justify-content:center;gap:.4rem;
-}
-.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,123,255,.25)}
+/* ===================== TOMBOL ===================== */
+.btn{padding:.75rem 1.3rem;border:none;border-radius:11px;font-weight:700;cursor:pointer;font-size:.9rem;transition:.18s;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.4rem}
+.btn:hover{transform:translateY(-1px)}
 .btn:active{transform:translateY(0)}
 .btn-blue{background:var(--blue);color:#fff}
 .btn-deep{background:var(--blue-deep);color:#fff}
@@ -121,56 +84,18 @@ button,input,select{font-family:inherit}
 .btn-outline:hover{background:var(--blue);color:#fff}
 .btn-soft{background:var(--blue-soft);color:var(--blue-dark)}
 .btn-ghost{background:var(--bg-soft);color:var(--text);border:1px solid var(--border)}
-.btn-ghost:hover{border-color:var(--blue);color:var(--blue);box-shadow:none}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
 .btn-sm{padding:.42rem .72rem;font-size:.78rem;border-radius:9px}
 .btn-block{width:100%}
 
-/* =========================================================
-   BERANDA
-   ========================================================= */
-.hero{
-  background:radial-gradient(800px 300px at 90% -20%,rgba(0,123,255,.14),transparent 60%),var(--card);
-  border:1px solid var(--border);border-radius:22px;padding:3rem 2rem;text-align:center;
-  margin-bottom:1.5rem;box-shadow:var(--shadow);
-}
-.hero h1{font-size:clamp(1.6rem,4.5vw,2.5rem);font-weight:800;letter-spacing:-.02em;color:var(--blue);margin-bottom:.5rem}
+/* ===================== BERANDA ===================== */
+.hero{background:radial-gradient(800px 300px at 90% -20%,rgba(0,123,255,.10),transparent 60%),var(--card);border:1px solid var(--border);border-radius:22px;padding:3rem 2rem;text-align:center;margin-bottom:1.5rem;box-shadow:var(--shadow)}
+.hero h1{font-size:clamp(1.6rem,4.5vw,2.5rem);font-weight:800;letter-spacing:-.02em;color:var(--text);margin-bottom:.5rem}
 .hero .lead{color:var(--text-2);max-width:660px;margin:0 auto .4rem;font-size:1rem}
-.hero .slogan{font-style:italic;color:var(--blue-deep);font-weight:600;margin-bottom:1.6rem}
-[data-theme="dark"] .hero .slogan{color:var(--blue-dark)}
+.hero .slogan{font-style:italic;color:var(--text-2);font-weight:600;margin-bottom:1.6rem}
 .hero-buttons{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
-.info-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.2rem;border-left:4px solid var(--blue);box-shadow:var(--shadow);transition:.2s}
-.info-item:hover{transform:translateY(-3px);border-color:var(--blue)}
-.info-item h3{color:var(--blue);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.35rem;font-weight:800}
-.info-item p{color:var(--text-2);font-size:.87rem}
 
-/* =========================================================
-   FILTER, PENCARIAN, KARTU PRODUK
-   ========================================================= */
-.search-bar{display:flex;gap:.8rem;margin-bottom:1.1rem;flex-wrap:wrap}
-.inp{padding:.75rem 1rem;border:2px solid var(--border);border-radius:11px;font-size:.9rem;background:var(--card);color:var(--text);flex:1;min-width:190px;transition:.2s}
-.inp:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,123,255,.14)}
-.chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.1rem}
-.chip{padding:.5rem 1.05rem;border-radius:999px;border:2px solid var(--border);background:var(--card);color:var(--text-2);font-size:.82rem;font-weight:700;cursor:pointer;transition:.2s}
-.chip:hover{border-color:var(--blue);color:var(--blue)}
-.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
-.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:1rem}
-.product-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem;box-shadow:var(--shadow);transition:.2s;display:flex;flex-direction:column;gap:.4rem}
-.product-card:hover{transform:translateY(-4px);border-color:var(--blue)}
-.badge{display:inline-block;padding:.24rem .7rem;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.03em;background:var(--blue-soft);color:var(--blue-dark)}
-[data-theme="dark"] .badge{color:var(--blue-dark)}
-.product-name{font-weight:700;font-size:.98rem;line-height:1.35}
-.product-price{color:var(--blue);font-weight:800;font-size:1.25rem}
-.product-stock{font-size:.78rem;color:var(--text-2)}
-.bc-box{background:var(--white);border:1px dashed var(--border);border-radius:10px;padding:.5rem .4rem;margin-top:auto;display:grid;place-items:center;min-height:66px;gap:.25rem}
-[data-theme="dark"] .bc-box{background:#FFFFFF;border-color:#FFFFFF}
-.bc-box svg,.bc-box canvas{max-width:100%}
-canvas.qr{display:block}
-.code-tag{font-size:.64rem;font-weight:800;letter-spacing:.06em;color:#5A7A99;text-transform:uppercase}
-
-/* =========================================================
-   KASIR
-   ========================================================= */
+/* ===================== KASIR ===================== */
 .split{display:grid;grid-template-columns:1.05fr .95fr;gap:1.25rem}
 .split-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
 .scan-box{background:var(--blue-tint);border:2px dashed var(--blue);border-radius:14px;padding:1rem;margin-bottom:1rem}
@@ -179,66 +104,64 @@ canvas.qr{display:block}
 .scan-row{display:flex;gap:.5rem;flex-wrap:wrap}
 .scan-row input{flex:1;min-width:190px;background:var(--white)}
 [data-theme="dark"] .scan-row input{background:var(--bg-soft)}
+.inp{padding:.75rem 1rem;border:1px solid var(--border);border-radius:11px;font-size:.9rem;background:var(--card);color:var(--text);flex:1;min-width:190px;transition:.2s}
+.inp:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,123,255,.12)}
 .last-scan{margin-top:.7rem;background:var(--card);border:1px solid var(--border);border-radius:11px;padding:.65rem .8rem;display:none;align-items:center;gap:.8rem;flex-wrap:wrap}
 .last-scan.show{display:flex}
 .picker{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem;align-items:flex-end}
-.picker select,.picker input{padding:.72rem .8rem;border:2px solid var(--border);border-radius:11px;background:var(--card);color:var(--text);font-size:.88rem}
+.picker select,.picker input{padding:.72rem .8rem;border:1px solid var(--border);border-radius:11px;background:var(--card);color:var(--text);font-size:.88rem}
 .picker select{flex:2;min-width:180px}
 .picker input{width:88px;text-align:center}
 .picker select:focus,.picker input:focus{outline:none;border-color:var(--blue)}
 .tbl{width:100%;border-collapse:collapse;margin:.9rem 0}
 .tbl th,.tbl td{padding:.65rem .6rem;text-align:left;border-bottom:1px solid var(--border);font-size:.85rem}
-.tbl th{background:var(--blue);color:#fff;font-size:.74rem;text-transform:uppercase;letter-spacing:.05em}
+.tbl th{background:var(--bg-soft);color:var(--text);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)}
 .tbl tbody tr:hover{background:var(--bg-soft)}
-.total-bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;background:var(--blue-soft);border:1px solid var(--border);border-radius:12px;padding:.95rem 1.1rem;margin-bottom:.9rem;flex-wrap:wrap}
+.total-bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;padding:.95rem 1.1rem;margin-bottom:.9rem;flex-wrap:wrap}
 .total-bar .lbl{font-size:.74rem;color:var(--text-2);font-weight:800;text-transform:uppercase;letter-spacing:.06em}
-.total-bar .val{font-size:1.65rem;font-weight:800;color:var(--blue-deep)}
-[data-theme="dark"] .total-bar .val{color:var(--blue-dark)}
+.total-bar .val{font-size:1.65rem;font-weight:700;color:var(--text)}
 .hist{max-height:440px;overflow-y:auto;padding-right:.3rem}
-.tx{border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:11px;padding:.8rem .9rem;margin-bottom:.6rem;background:var(--card);transition:.2s}
-.tx:hover{box-shadow:var(--shadow)}
+.tx{border:1px solid var(--border);border-left:4px solid var(--text);border-radius:11px;padding:.8rem .9rem;margin-bottom:.6rem;background:var(--card);transition:.2s}
+.tx:hover{border-color:var(--blue)}
 .tx-head{display:flex;justify-content:space-between;gap:.5rem;align-items:center;flex-wrap:wrap}
-.tx-id{font-weight:800;color:var(--blue);font-size:.9rem}
+.tx-id{font-weight:800;color:var(--text);font-size:.9rem}
 .tx-time{font-size:.72rem;color:var(--text-2)}
-.tx-items{font-size:.78rem;color:var(--text-2);margin:.25rem 0 .4rem}
-.tx-total{font-weight:800;color:var(--blue-deep);font-size:1rem}
-[data-theme="dark"] .tx-total{color:var(--blue-dark)}
+.tx-items{font-size:.78rem;color:var(--text-2);margin:.25rem 0 .2rem}
+.tx-total{font-weight:700;color:var(--text);font-size:1rem}
+.mini-bc{background:#fff;border-radius:7px;padding:3px 6px;display:inline-grid;place-items:center}
+.mini-bc svg,.mini-bc img{display:block}
+img.qr,canvas.qr{display:block;margin:0 auto;background:#fff;border-radius:4px;max-width:100%}
+.code-tag{font-size:.64rem;font-weight:800;letter-spacing:.06em;color:#5A7A99;text-transform:uppercase}
+.bc-box{background:var(--white);border:1px dashed var(--border);border-radius:10px;padding:.5rem .4rem;display:grid;place-items:center;min-height:66px;gap:.25rem}
+[data-theme="dark"] .bc-box{background:#FFFFFF;border-color:#FFFFFF}
+.bc-box svg,.bc-box img{max-width:100%}
 
-/* =========================================================
-   PEMINDAI KAMERA
-   ========================================================= */
+/* ===================== KAMERA ===================== */
 .reader-wrap{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;padding:6px}
 #reader{width:100%}
 #reader video{width:100%;border-radius:10px;display:block}
 #reader__scan_region img{display:none}
 #reader__header_message{display:none!important}
-#reader__dashboard_section_csr button,#reader__camera_switch_button{
-  background:var(--blue-soft)!important;color:var(--blue-dark)!important;border:1px solid var(--blue)!important;
-  border-radius:8px!important;padding:.3rem .6rem!important;font-weight:700!important;
-}
+#reader__dashboard_section_csr button,#reader__camera_switch_button{background:var(--blue-soft)!important;color:var(--blue-dark)!important;border:1px solid var(--blue)!important;border-radius:8px!important;padding:.3rem .6rem!important;font-weight:700!important}
 .scan-note{font-size:.78rem;color:var(--text-2);margin-top:.6rem}
 .scan-note.err{color:var(--blue-deep);font-weight:700}
 [data-theme="dark"] .scan-note.err{color:var(--blue-dark)}
 
-/* =========================================================
-   LAPORAN
-   ========================================================= */
+/* ===================== LAPORAN ===================== */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:1rem;margin-bottom:1.25rem}
 .stat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.15rem;box-shadow:var(--shadow);position:relative;overflow:hidden;transition:.2s}
-.stat:hover{transform:translateY(-3px);border-color:var(--blue)}
+.stat:hover{transform:translateY(-2px);border-color:var(--blue)}
 .stat::after{content:"";position:absolute;right:-20px;top:-20px;width:74px;height:74px;border-radius:50%;background:var(--blue-soft)}
 .stat .lbl{font-size:.73rem;color:var(--text-2);font-weight:800;text-transform:uppercase;letter-spacing:.05em;position:relative;z-index:1}
-.stat .val{font-size:1.5rem;font-weight:800;color:var(--blue);position:relative;z-index:1;line-height:1.25;margin-top:.2rem}
+.stat .val{font-size:1.5rem;font-weight:700;color:var(--text);position:relative;z-index:1;line-height:1.25;margin-top:.2rem}
 .bar-row{display:flex;align-items:center;gap:.8rem;margin-bottom:.75rem}
 .bar-row .nm{width:104px;font-size:.83rem;font-weight:700;flex:none}
 .bar-track{flex:1;height:14px;background:var(--bg-soft);border-radius:999px;overflow:hidden;border:1px solid var(--border)}
 .bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue-deep),var(--blue));transition:width .6s ease}
-.bar-row .vv{width:118px;text-align:right;font-size:.83rem;font-weight:800;flex:none}
+.bar-row .vv{width:118px;text-align:right;font-size:.83rem;font-weight:700;flex:none}
 .chart-box{position:relative;height:300px}
 
-/* =========================================================
-   DSS
-   ========================================================= */
+/* ===================== DSS ===================== */
 .rank{list-style:none}
 .rank li{display:flex;align-items:center;gap:.9rem;padding:.75rem .4rem;border-bottom:1px solid var(--border)}
 .rank li:last-child{border-bottom:none}
@@ -251,132 +174,92 @@ canvas.qr{display:block}
 .rank-info{flex:1;min-width:0}
 .rank-nm{font-weight:700;font-size:.92rem}
 .rank-kd{font-size:.72rem;color:var(--text-2);font-family:monospace}
-.rank-qty{font-weight:800;color:var(--blue);font-size:.9rem;white-space:nowrap}
+.rank-qty{font-weight:700;color:var(--text);font-size:.9rem;white-space:nowrap}
 .alert{border:1px solid var(--blue);border-radius:12px;padding:.8rem .95rem;margin-bottom:.6rem;background:var(--blue-tint)}
 .alert.out{background:var(--blue);border-color:var(--blue)}
 .alert.out .t,.alert.out .d{color:#fff}
 .alert .t{font-weight:800;color:var(--blue-dark);font-size:.9rem}
 .alert .d{font-size:.8rem;color:var(--text-2)}
-.reco{border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:12px;padding:.85rem .95rem;margin-bottom:.6rem;background:var(--card)}
+.reco{border:1px solid var(--border);border-left:4px solid var(--text);border-radius:12px;padding:.85rem .95rem;margin-bottom:.6rem;background:var(--card)}
 .reco .t{font-weight:800;font-size:.9rem}
 .reco .d{font-size:.8rem;color:var(--text-2);margin-top:.15rem}
-.reco .s{font-weight:800;color:var(--blue-dark);font-size:.88rem;margin-top:.3rem}
-[data-theme="dark"] .reco .s{color:var(--blue-dark)}
+.reco .s{font-weight:700;color:var(--text);font-size:.88rem;margin-top:.3rem}
 
-/* =========================================================
-   TABEL DATA BARANG
-   ========================================================= */
+/* ===================== TABEL DATA BARANG ===================== */
 .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px}
 .data-table{width:100%;border-collapse:collapse;font-size:.85rem;min-width:900px}
 .data-table th,.data-table td{padding:.7rem .75rem;text-align:left;border-bottom:1px solid var(--border)}
-.data-table th{background:var(--blue);color:#fff;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;position:sticky;top:0}
+.data-table th{background:var(--bg-soft);color:var(--text);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;position:sticky;top:0;border-bottom:1px solid var(--border)}
 .data-table tbody tr:hover{background:var(--bg-soft)}
 .data-table tbody tr:last-child td{border-bottom:none}
-.mini-bc{background:#fff;border-radius:7px;padding:3px 4px;display:inline-block}
-.mini-bc svg,.mini-bc canvas{display:block}
 .stock-pill{padding:.22rem .62rem;border-radius:999px;font-size:.72rem;font-weight:800;white-space:nowrap}
 .s-ok{background:var(--blue-soft);color:var(--blue-dark)}
-.s-low{background:#fff;color:var(--blue);border:1.5px solid var(--blue)}
+.s-low{background:#fff;color:var(--text);border:1.5px solid var(--border)}
 .s-out{background:var(--blue-deep);color:#fff}
 [data-theme="dark"] .s-ok{color:var(--blue-dark)}
-[data-theme="dark"] .s-low{background:transparent;color:var(--blue-dark)}
+[data-theme="dark"] .s-low{background:transparent;color:var(--text-2)}
+/* Badge kategori tint lembut */
+.badge{display:inline-block;padding:.24rem .7rem;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.03em}
+.b-Minuman{background:#E8F1FD;color:#0B5CAD}
+.b-Makanan{background:#FDECEC;color:#B4232A}
+.b-ATK{background:#FBF3DC;color:#8A5A00}
+.b-Jasa{background:#E6F4EA;color:#1E7A46}
+[data-theme="dark"] .b-Minuman{background:#12294A;color:#8CC4FF}
+[data-theme="dark"] .b-Makanan{background:#3A1518;color:#FCA5A5}
+[data-theme="dark"] .b-ATK{background:#3A2E12;color:#FCD34D}
+[data-theme="dark"] .b-Jasa{background:#12301F;color:#86EFAC}
 .form-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:.9rem}
 .form-group{margin-bottom:.9rem}
 .form-group label{display:block;font-weight:700;font-size:.78rem;margin-bottom:.3rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.03em}
-.form-group input,.form-group select{width:100%;padding:.7rem .85rem;border:2px solid var(--border);border-radius:11px;background:var(--card);color:var(--text);font-size:.9rem}
-.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,123,255,.14)}
+.form-group input,.form-group select{width:100%;padding:.7rem .85rem;border:1px solid var(--border);border-radius:11px;background:var(--card);color:var(--text);font-size:.9rem}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,123,255,.12)}
 .code-field{display:flex;gap:.4rem}
 .code-field input{flex:1;min-width:0}
 
-/* =========================================================
-   TENTANG DAN PROFIL
-   ========================================================= */
-.about{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem}
-.about p{font-size:.92rem;color:var(--text-2)}
-.about ul{padding-left:1.3rem;margin:.6rem 0 1rem}
-.about li{font-size:.9rem;color:var(--text-2);margin-bottom:.28rem}
-.about li::marker{color:var(--blue)}
-.map-ph{
-  background:linear-gradient(rgba(0,123,255,.06) 1px,transparent 1px) 0 0/26px 26px,
-             linear-gradient(90deg,rgba(0,123,255,.06) 1px,transparent 1px) 0 0/26px 26px,var(--bg-soft);
-  border:1px solid var(--border);border-radius:14px;padding:1.8rem;text-align:center;min-height:230px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;
-}
-.pin{width:50px;height:50px;border-radius:50% 50% 50% 0;background:var(--blue);transform:rotate(-45deg);margin-bottom:1rem;box-shadow:0 8px 20px rgba(0,123,255,.4);animation:bob 2.4s ease-in-out infinite;position:relative}
-.pin::after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;background:#fff;border-radius:50%;transform:translate(-50%,-50%)}
-@keyframes bob{0%,100%{transform:rotate(-45deg) translate(0,0)}50%{transform:rotate(-45deg) translate(4px,-4px)}}
+/* ===================== PROFIL ===================== */
 .team-head{text-align:center;margin-bottom:1.6rem}
-.team-head h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:800;letter-spacing:.05em;color:var(--blue)}
+.team-head h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:800;letter-spacing:.05em;color:var(--text)}
 .team-head p{color:var(--text-2);font-size:.92rem}
 .team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1.1rem}
 .team-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.6rem 1.1rem 1.4rem;text-align:center;box-shadow:var(--shadow);transition:.2s;position:relative;overflow:hidden}
-.team-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--blue)}
-.team-card:hover{transform:translateY(-5px);border-color:var(--blue)}
+.team-card::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--text)}
+.team-card:hover{transform:translateY(-3px);border-color:var(--blue)}
 .avatar{width:74px;height:74px;border-radius:22px;display:grid;place-items:center;margin:0 auto .9rem;font-size:1.5rem;font-weight:800;color:#fff;background:var(--blue-deep)}
 .team-card:nth-child(2n) .avatar{background:var(--blue-dark)}
 .team-card:nth-child(3n) .avatar{background:var(--blue)}
 .member-name{font-weight:700;font-size:.98rem;line-height:1.35}
 .member-npm{color:var(--text-2);font-size:.83rem;font-family:monospace;margin-top:.25rem}
-.member-role{display:inline-block;margin-top:.65rem;background:var(--blue-soft);color:var(--blue-dark);padding:.22rem .72rem;border-radius:999px;font-size:.7rem;font-weight:800}
+/* Label peran diletakkan di pojok kanan kartu */
+.member-role{position:absolute;top:12px;right:12px;background:var(--blue-soft);color:var(--blue-dark);padding:.22rem .72rem;border-radius:999px;font-size:.7rem;font-weight:800}
 [data-theme="dark"] .member-role{color:var(--blue-dark)}
 
-/* =========================================================
-   MODAL
-   ========================================================= */
+/* ===================== MODAL & CETAK ===================== */
 .overlay{display:none;position:fixed;inset:0;background:rgba(10,37,64,.6);backdrop-filter:blur(3px);z-index:2000;align-items:center;justify-content:center;padding:1rem}
 .overlay.on{display:flex;animation:fade .2s}
 .modal{background:var(--card);border-radius:18px;padding:1.6rem;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,.3)}
 .modal.wide{max-width:940px}
 .modal h3{font-size:1.15rem;font-weight:800;margin-bottom:1rem}
 .modal-foot{display:flex;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
-
-/* =========================================================
-   AREA CETAK
-   ========================================================= */
 #printArea{display:none}
 .sheet-labels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .lbl{border:1px dashed #94A3B8;border-radius:8px;padding:8px;text-align:center;background:#fff;color:#000}
 .lbl .sn{font-size:11px;font-weight:700}
 .lbl .sp{font-size:12px;font-weight:800}
 .lbl .cw{display:grid;place-items:center;margin:4px 0}
-.receipt{width:300px;margin:0 auto;background:#fff;color:#000;font-family:'Courier New',monospace;padding:14px;border:1px solid #CBD5E1;border-radius:8px}
-.receipt h4{text-align:center;font-size:15px;margin-bottom:2px}
-.receipt .c{text-align:center;font-size:11px}
-.receipt hr{border:none;border-top:1px dashed #64748B;margin:8px 0}
-.receipt table{width:100%;font-size:11px;border-collapse:collapse}
-.receipt td{padding:2px 0;vertical-align:top}
-.receipt .r{text-align:right}
-.receipt .tot{font-size:14px;font-weight:800}
-.receipt .bcwrap{display:grid;place-items:center;margin-top:8px}
 @media print{
   body *{visibility:hidden!important}
   #printArea,#printArea *{visibility:visible!important}
   #printArea{display:block!important;position:absolute;left:0;top:0;width:100%;background:#fff}
   .modal-foot{display:none!important}
 }
-
-/* =========================================================
-   TOAST
-   ========================================================= */
-#toast{
-  position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%) translateY(140px);
-  background:var(--blue-deep);color:#fff;padding:.85rem 1.35rem;border-radius:12px;font-weight:700;
-  font-size:.88rem;z-index:3000;transition:.3s;box-shadow:0 12px 30px rgba(0,61,130,.4);max-width:92vw;
-}
+#toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%) translateY(140px);background:var(--blue-deep);color:#fff;padding:.85rem 1.35rem;border-radius:12px;font-weight:700;font-size:.88rem;z-index:3000;transition:.3s;box-shadow:0 12px 30px rgba(0,61,130,.4);max-width:92vw}
 #toast.show{transform:translateX(-50%) translateY(0)}
 #toast.err{background:var(--blue-deep);outline:2px solid #fff}
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
 .footer{background:var(--blue-deep);color:#fff;text-align:center;padding:1.6rem 1.25rem;margin-top:1rem}
 .footer b{font-size:.95rem;letter-spacing:.04em}
 .footer p{font-size:.85rem;opacity:.9}
 .footer a{color:#fff;font-weight:800;text-decoration:underline}
 
-/* =========================================================
-   RESPONSIVE
-   ========================================================= */
 @media (max-width:980px){.split,.split-2{grid-template-columns:1fr}}
 @media (max-width:820px){
   .hamburger{display:block}
@@ -391,7 +274,6 @@ canvas.qr{display:block}
   .main-content{padding:1rem .8rem 1.5rem}
   .card{padding:1.1rem}
   .hero{padding:2rem 1.1rem}
-  .product-grid{grid-template-columns:1fr 1fr}
   .sheet-labels{grid-template-columns:1fr}
 }
 </style>
@@ -411,12 +293,10 @@ canvas.qr{display:block}
     <button class="hamburger" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
     <div class="nav-links" id="navLinks">
       <a href="#" data-page="beranda" class="active" onclick="go('beranda');return false">Beranda</a>
-      <a href="#" data-page="layanan" onclick="go('layanan');return false">Layanan dan Harga</a>
       <a href="#" data-page="kasir" onclick="go('kasir');return false">Kasir</a>
       <a href="#" data-page="laporan" onclick="go('laporan');return false">Laporan</a>
       <a href="#" data-page="dss" onclick="go('dss');return false">DSS</a>
       <a href="#" data-page="databarang" onclick="go('databarang');return false">Data Barang</a>
-      <a href="#" data-page="tentang" onclick="go('tentang');return false">Tentang</a>
       <a href="#" data-page="profil" onclick="go('profil');return false">Profil Pembuat</a>
       <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()">Mode Gelap</button>
     </div>
@@ -432,56 +312,33 @@ canvas.qr{display:block}
       <p class="lead">Sistem Digital Photocopy Toga Mas. Pencatatan kasir, pemantauan stok, laporan harian, serta barcode dan QR Code barang dalam satu halaman.</p>
       <p class="slogan">Fotokopi Cepat, ATK Lengkap, Harga Mahasiswa</p>
       <div class="hero-buttons">
-        <button class="btn btn-blue" onclick="go('layanan')">Lihat Layanan</button>
         <button class="btn btn-outline" onclick="go('kasir')">Masuk Kasir</button>
       </div>
     </div>
-    <div class="info-grid">
-      <div class="info-item"><h3>Jam Layanan</h3><p>Senin sampai Jumat: 08:00 - 16:00 WIT</p></div>
-      <div class="info-item"><h3>Lokasi</h3><p>Jl. Kamizaibu, sekitar Kampus UNMUS</p><p>Merauke, Papua Selatan</p></div>
-      <div class="info-item"><h3>Kontak</h3><p>WhatsApp: 0812-XXXX-XXXX</p></div>
-      <div class="info-item"><h3>Layanan Kami</h3><p>Fotokopi, print, ATK, minuman, dan makanan ringan</p><p>Harga terjangkau untuk mahasiswa</p></div>
-    </div>
   </section>
 
-  <!-- ============ 2. LAYANAN DAN HARGA ============ -->
-  <section class="page" id="page-layanan">
-    <div class="card">
-      <div class="card-title">Layanan dan Harga</div>
-      <p class="card-sub">Katalog produk dan jasa Toga Mas lengkap dengan barcode atau QR Code pada setiap item.</p>
-      <div class="search-bar">
-        <input class="inp" type="text" id="searchProduct" placeholder="Cari nama barang, kode, atau nomor barcode" oninput="renderProducts()">
-      </div>
-      <div class="chips" id="catChips"></div>
-      <div class="product-grid" id="productGrid"></div>
-    </div>
-  </section>
-
-  <!-- ============ 3. KASIR DIGITAL (TPS) ============ -->
+  <!-- ============ 2. KASIR DIGITAL (TPS) ============ -->
   <section class="page" id="page-kasir">
     <div class="card">
       <div class="card-title">Kasir Digital - TPS</div>
-      <p class="card-sub">Transaction Processing System. Pindai barcode atau QR Code dengan kamera maupun alat scanner, total dihitung otomatis, stok berkurang saat transaksi disimpan, dan struk dapat langsung dicetak.</p>
+      <p class="card-sub">Transaction Processing System. Pindai barcode atau QR Code dengan kamera maupun alat scanner, total dihitung otomatis, dan stok berkurang saat checkout.</p>
 
       <div class="split">
         <div>
-          <!-- Pemindai barcode dan QR -->
           <div class="scan-box">
             <div class="scan-title">Pemindai Barcode dan QR Code</div>
             <div class="scan-row">
               <input class="inp" type="text" id="scanInput" placeholder="Pindai atau ketik kode barang, lalu tekan Enter" onkeydown="if(event.key==='Enter')scanAdd()">
               <button class="btn btn-blue" onclick="scanAdd()">Tambah</button>
               <button class="btn btn-deep" onclick="openCamera()">Scan Kamera</button>
-              <button class="btn btn-ghost" onclick="simulateScan()" title="Meniru cara kerja alat pemindai barcode">Simulasi Scan</button>
             </div>
             <div class="last-scan" id="lastScan"></div>
           </div>
 
-          <!-- Pemilihan manual -->
           <div class="picker">
             <select id="kasirBarang"><option value="">Pilih Barang (manual)</option></select>
             <input type="number" id="kasirJumlah" min="1" value="1" title="Jumlah">
-            <button class="btn btn-outline" onclick="addToCart()">Tambah</button>
+            <button class="btn btn-blue" onclick="addToCart()">Tambah ke Kasir</button>
           </div>
 
           <div class="table-wrap" style="min-width:0">
@@ -493,10 +350,9 @@ canvas.qr{display:block}
 
           <div class="total-bar">
             <div><div class="lbl">Total Bayar</div><div class="val" id="cartTotal">Rp 0</div></div>
-            <div style="text-align:right"><div class="lbl">Item di Keranjang</div><div style="font-weight:800;font-size:1.15rem" id="cartCount">0</div></div>
+            <div style="text-align:right"><div class="lbl">Item di Keranjang</div><div style="font-weight:700;font-size:1.15rem" id="cartCount">0</div></div>
           </div>
-          <button class="btn btn-blue btn-block" onclick="saveTransaction()">Simpan Transaksi dan Cetak Struk</button>
-          <button class="btn btn-outline btn-block" style="margin-top:.5rem" onclick="printLastReceipt()">Cetak Struk Transaksi Terakhir</button>
+          <button class="btn btn-blue btn-block" onclick="checkout()">Checkout</button>
           <button class="btn btn-ghost btn-block" style="margin-top:.5rem" onclick="clearCart()">Kosongkan Keranjang</button>
         </div>
 
@@ -509,7 +365,7 @@ canvas.qr{display:block}
     </div>
   </section>
 
-  <!-- ============ 4. LAPORAN HARIAN (MIS) ============ -->
+  <!-- ============ 3. LAPORAN HARIAN (MIS) ============ -->
   <section class="page" id="page-laporan">
     <div class="card">
       <div class="card-title">Laporan Harian - MIS</div>
@@ -534,13 +390,14 @@ canvas.qr{display:block}
       </div>
 
       <div style="display:flex;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap">
-        <button class="btn btn-blue" onclick="printReport()">Cetak Laporan</button>
+        <!-- Tombol Reset: menghapus laporan harian yang sudah ada agar laporan mulai dari awal -->
+        <button class="btn btn-deep" onclick="resetLaporan()">Reset</button>
         <button class="btn btn-outline" onclick="exportCSV()">Ekspor CSV</button>
       </div>
     </div>
   </section>
 
-  <!-- ============ 5. DSS ============ -->
+  <!-- ============ 4. DSS ============ -->
   <section class="page" id="page-dss">
     <div class="card">
       <div class="card-title">Barang Terlaris dan Rekomendasi Restock - DSS</div>
@@ -564,7 +421,7 @@ canvas.qr{display:block}
     </div>
   </section>
 
-  <!-- ============ 6. DATA BARANG ============ -->
+  <!-- ============ 5. DATA BARANG ============ -->
   <section class="page" id="page-databarang">
     <div class="card">
       <div class="card-title">Kelola Data Barang</div>
@@ -583,45 +440,7 @@ canvas.qr{display:block}
     </div>
   </section>
 
-  <!-- ============ 7. TENTANG DAN KONTAK ============ -->
-  <section class="page" id="page-tentang">
-    <div class="card">
-      <div class="card-title">Tentang dan Kontak</div>
-      <p class="card-sub">Toko Photocopy Toga Mas, mitra kebutuhan kuliah mahasiswa Universitas Musamus Merauke.</p>
-      <div class="about">
-        <div>
-          <h3 style="margin-bottom:.5rem;color:var(--blue)">Toga Mas Merauke</h3>
-          <p>Toga Mas adalah toko photocopy yang berlokasi di sekitar kampus Universitas Musamus (UNMUS), Merauke, Papua Selatan. Kami melayani kebutuhan akademik dan harian mahasiswa:</p>
-          <ul>
-            <li>Jasa fotokopi dokumen hitam putih</li>
-            <li>Jasa print dokumen dan print warna</li>
-            <li>Jasa scan, jilid, dan laminating</li>
-            <li>Alat tulis kantor seperti pulpen, pensil, buku, map, dan penghapus</li>
-            <li>Minuman dingin dan makanan ringan</li>
-          </ul>
-          <p>Sistem digital ini diusulkan sebagai pengganti pencatatan kasir manual pada buku atau kertas, agar transaksi, stok, dan laporan harian tercatat rapi serta dapat dipantau kapan saja.</p>
-          <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem">
-            <button class="btn btn-blue" onclick="go('layanan')">Lihat Harga</button>
-            <button class="btn btn-outline" onclick="go('kasir')">Buka Kasir</button>
-          </div>
-        </div>
-        <div>
-          <div class="map-ph">
-            <div class="pin"></div>
-            <h3 style="font-size:1.05rem">Lokasi Toko</h3>
-            <p style="font-size:.9rem;color:var(--text-2)">Jl. Kamizaibu, sekitar Kampus UNMUS</p>
-            <p style="font-size:.9rem;color:var(--text-2)">Merauke, Papua Selatan 99611</p>
-          </div>
-          <div class="info-grid" style="margin-top:1rem;grid-template-columns:1fr">
-            <div class="info-item"><h3>Jam Layanan</h3><p>Senin sampai Jumat: 08:00 - 16:00 WIT</p></div>
-            <div class="info-item"><h3>Kontak</h3><p>WhatsApp 0812-XXXX-XXXX</p></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 8. PROFIL PEMBUAT ============ -->
+  <!-- ============ 6. PROFIL PEMBUAT ============ -->
   <section class="page" id="page-profil">
     <div class="card">
       <div class="team-head">
@@ -659,7 +478,6 @@ canvas.qr{display:block}
         </select>
       </div>
     </div>
-    <!-- Nomor barcode / QR dapat diganti atau diketik manual -->
     <div class="form-group">
       <label>Nomor Barcode / QR Code (bisa diganti)</label>
       <div class="code-field">
@@ -703,7 +521,6 @@ canvas.qr{display:block}
   </div>
 </div>
 
-<!-- ============ FOOTER ============ -->
 <footer class="footer">
   <b>TOGA MAS UNMUS MERAUKE</b>
   <p>Sistem Digital Photocopy Toga Mas - konsep TPS, MIS, dan DSS</p>
@@ -761,8 +578,9 @@ const DEFAULT_DETAIL = [
   {id:10,id_transaksi:'TRX005',kode_barang:'JSA002',jumlah:8 ,harga:1000,subtotal:8000},
   {id:11,id_transaksi:'TRX005',kode_barang:'MIN002',jumlah:1 ,harga:4000,subtotal:4000}
 ];
+/* Seluruh anggota berstatus Anggota */
 const TEAM = [
-  {nama:'Nurul Rahma A. Diharjo',npm:'202557201030',role:'Ketua Kelompok'},
+  {nama:'Nurul Rahma A. Diharjo',npm:'202557201030',role:'Anggota'},
   {nama:'Karmila',npm:'202557201012',role:'Anggota'},
   {nama:'Muudmainah',npm:'202557201063',role:'Anggota'},
   {nama:'Ahmad Tasyurrun Hidayah',npm:'202557201033',role:'Anggota'},
@@ -770,14 +588,11 @@ const TEAM = [
   {nama:'Evandra Galang Syahputra',npm:'202557201058',role:'Anggota'}
 ];
 
-/* =========================================================
-   STATE DAN PENYIMPANAN LOCALSTORAGE
-   ========================================================= */
+/* ===================== STATE ===================== */
 let barang = load('tm_barang') || structuredClone(DEFAULT_BARANG);
 let transaksi = load('tm_transaksi') || structuredClone(DEFAULT_TRX);
 let detailTransaksi = load('tm_detail') || structuredClone(DEFAULT_DETAIL);
 let cart = [];
-let catFilter = 'Semua';
 let trxCounter = transaksi.reduce((m,t)=>Math.max(m,parseInt(t.id.replace(/\D/g,''))||0),0)+1;
 
 function load(k){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):null }catch(e){ return null } }
@@ -789,9 +604,7 @@ function save(){
 const rp = n => 'Rp ' + Number(n||0).toLocaleString('id-ID');
 const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-/* =========================================================
-   PEMBUAT KODE: BARCODE EAN-13 DAN QR CODE
-   ========================================================= */
+/* ===================== KODE: BARCODE & QR ===================== */
 function hashStr(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))>>>0 } return h }
 function ean13(base12){
   let sum=0; for(let i=0;i<12;i++) sum += (+base12[i])*(i%2===0?1:3);
@@ -804,14 +617,7 @@ function genBarcode(seed){
   while(barang.some(b=>b.barcode===bc) && guard<60){ n=(n+7919)%1000000000; bc=ean13('899'+String(n).padStart(9,'0')); guard++ }
   return bc;
 }
-// Nilai QR Code berupa teks bebas, dibuat dari kode barang agar mudah dibaca scanner
-function genQR(seed){
-  const base = 'TOGAMAS-' + (String(seed||'BRG').toUpperCase().replace(/\s+/g,''));
-  let v = base, n = 1;
-  while(barang.some(b=>b.barcode===v)){ v = base+'-'+(++n) }
-  return v;
-}
-// Menentukan format barcode yang didukung JsBarcode
+function genQR(kode){ return String(kode||'').trim().toUpperCase() }
 function bcFormat(v){
   v = String(v||'').trim();
   if(/^\d{12}$/.test(v)) return 'EAN13';
@@ -830,9 +636,7 @@ function ensureCodes(){
 }
 ensureCodes();
 
-/* =========================================================
-   RENDER BARCODE DAN QR KE ELEMEN
-   ========================================================= */
+/* ===================== RENDER KODE ===================== */
 function drawBarcodes(scope){
   (scope||document).querySelectorAll('svg.bc').forEach(svg=>{
     const val = svg.dataset.bc;
@@ -850,16 +654,17 @@ function drawBarcodes(scope){
     }catch(e){ svg.innerHTML='' }
   });
 }
-function drawQR(cv,val,size,dark){
+function drawQRImg(img,val,size,dark){
   if(typeof QRCode==='undefined') return;
   try{
-    QRCode.toCanvas(cv,val,{width:size||96,margin:1,color:{dark:dark||'#0A2540',light:'#FFFFFF'}},function(){});
+    QRCode.toDataURL(val,{width:size||96,margin:1,color:{dark:dark||'#0A2540',light:'#FFFFFF'}})
+      .then(function(url){ img.src=url }).catch(function(){});
   }catch(e){}
 }
 function drawQRs(scope){
   const dark = getComputedStyle(document.body).getPropertyValue('--bc').trim()||'#0A2540';
-  (scope||document).querySelectorAll('canvas.qr[data-qr]').forEach(cv=>{
-    drawQR(cv, cv.dataset.qr, +(cv.dataset.size||96), cv.dataset.pc==='1' ? '#000000' : dark);
+  (scope||document).querySelectorAll('img.qr[data-qr]').forEach(img=>{
+    drawQRImg(img, img.dataset.qr, +(img.dataset.size||96), img.dataset.pc==='1' ? '#000000' : dark);
   });
 }
 function drawCodes(scope){ drawBarcodes(scope); drawQRs(scope) }
@@ -871,19 +676,16 @@ function drawOne(el,val,opt){
       background:opt.bg||'#FFFFFF',lineColor:opt.lc||'#000000'});
   }catch(e){}
 }
-// HTML gambar kode (barcode atau QR) untuk sebuah barang
 function codeHTML(b,o){
   o=o||{};
   if(b.tipeKode==='QR'){
-    return '<canvas class="qr" data-qr="'+esc(b.barcode)+'" data-size="'+(o.size||96)+'" '+(o.pc?'data-pc="1"':'')+'></canvas>';
+    return '<img class="qr" data-qr="'+esc(b.barcode)+'" data-size="'+(o.size||96)+'" '+(o.pc?'data-pc="1"':'')+' alt="QR">';
   }
   return '<svg class="bc" data-bc="'+esc(b.barcode)+'" data-fmt="'+bcFormat(b.barcode)+'" data-h="'+(o.h||34)+
          '" data-w="'+(o.w||1.3)+'" data-fs="'+(o.fs||10)+'" data-dv="'+(o.dv===false?0:1)+'" '+(o.pc?'data-pc="1"':'')+'></svg>';
 }
 
-/* =========================================================
-   NAVIGASI DAN TEMA
-   ========================================================= */
+/* ===================== NAVIGASI & TEMA ===================== */
 function go(page){
   stopCam();
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -891,7 +693,6 @@ function go(page){
   document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.page===page));
   document.getElementById('navLinks').classList.remove('open');
   window.scrollTo({top:0,behavior:'smooth'});
-  if(page==='layanan') renderProducts();
   if(page==='kasir'){ renderKasirSelect(); renderCart(); renderHistory(); setTimeout(()=>document.getElementById('scanInput').focus(),250) }
   if(page==='laporan') renderLaporan();
   if(page==='dss') renderDSS();
@@ -912,7 +713,6 @@ function toggleTheme(){
   const t = localStorage.getItem('tm_theme');
   if(t==='dark'){ document.body.setAttribute('data-theme','dark'); document.getElementById('themeBtn').textContent='Mode Terang' }
 })();
-
 let toastTimer;
 function toast(msg,type){
   const el=document.getElementById('toast');
@@ -927,12 +727,9 @@ document.querySelectorAll('.overlay').forEach(o=>o.addEventListener('click',e=>{
   if(e.target===o){ if(o.id==='scanModal') stopCam(); o.classList.remove('on') }
 }));
 
-/* =========================================================
-   PEMINDAI KAMERA (BARCODE DAN QR)
-   ========================================================= */
+/* ===================== KAMERA ===================== */
 let camScanner = null, camFacing = 'environment';
 const CAM_FORMATS = ['QR_CODE','EAN_13','EAN_8','CODE_128','CODE_39','CODE_93','UPC_A','UPC_E','ITF','DATA_MATRIX'];
-
 function openCamera(){
   document.getElementById('camErr').textContent='';
   document.getElementById('scanModal').classList.add('on');
@@ -942,81 +739,28 @@ function startCam(){
   const errEl = document.getElementById('camErr');
   errEl.textContent='';
   stopCam();
-  if(typeof Html5Qrcode === 'undefined'){
-    errEl.textContent = 'Pustaka pemindai gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.';
-    return;
-  }
-  const el = document.getElementById('reader');
-  el.innerHTML='';
+  if(typeof Html5Qrcode === 'undefined'){ errEl.textContent='Pustaka pemindai gagal dimuat. Periksa koneksi internet lalu muat ulang halaman.'; return }
+  document.getElementById('reader').innerHTML='';
   try{
     const fmt = CAM_FORMATS.filter(f=>Html5QrcodeSupportedFormats[f]!==undefined).map(f=>Html5QrcodeSupportedFormats[f]);
     camScanner = new Html5Qrcode('reader', fmt.length ? {formatsToSupport:fmt, verbose:false} : {verbose:false});
-  }catch(e){
-    camScanner = new Html5Qrcode('reader');
-  }
-  camScanner.start(
-    { facingMode: camFacing },
-    { fps: 10, qrbox: { width: 250, height: 160 }, disableFlip:false },
-    onCamSuccess,
-    function(){}
-  ).catch(function(err){
-    camScanner = null;
-    errEl.textContent = 'Kamera tidak dapat diakses. Izinkan akses kamera pada browser, atau gunakan https / localhost. Detail: ' + err;
+  }catch(e){ camScanner = new Html5Qrcode('reader') }
+  camScanner.start({facingMode:camFacing},{fps:10,qrbox:{width:250,height:160},disableFlip:false},onCamSuccess,function(){})
+  .catch(function(err){
+    camScanner=null;
+    errEl.textContent='Kamera tidak dapat diakses. Izinkan akses kamera pada browser, atau gunakan https / localhost. Detail: '+err;
   });
 }
-function onCamSuccess(decodedText){
-  stopCam();
-  document.getElementById('scanModal').classList.remove('on');
-  document.getElementById('scanInput').value = decodedText;
-  scanAdd();
-}
+function onCamSuccess(t){ stopCam(); document.getElementById('scanModal').classList.remove('on'); document.getElementById('scanInput').value=t; scanAdd() }
 function stopCam(){
   if(!camScanner) return;
-  const s = camScanner; camScanner = null;
-  try{ s.stop().then(function(){ try{ s.clear() }catch(e){} }).catch(function(){}) }catch(e){}
+  const s=camScanner; camScanner=null;
+  try{ s.stop().then(function(){ try{s.clear()}catch(e){} }).catch(function(){}) }catch(e){}
 }
-function switchCam(){
-  camFacing = (camFacing==='environment') ? 'user' : 'environment';
-  startCam();
-}
+function switchCam(){ camFacing = (camFacing==='environment')?'user':'environment'; startCam() }
 window.addEventListener('beforeunload', stopCam);
 
-/* =========================================================
-   HALAMAN LAYANAN DAN HARGA
-   ========================================================= */
-const CATS = ['Semua','Minuman','Makanan','ATK','Jasa'];
-function renderChips(){
-  document.getElementById('catChips').innerHTML = CATS.map(c=>
-    '<button class="chip '+(c===catFilter?'on':'')+'" onclick="setCat(\''+c+'\')">'+c+'</button>').join('');
-}
-function setCat(c){ catFilter=c; renderChips(); renderProducts() }
-function renderProducts(){
-  renderChips();
-  const q = document.getElementById('searchProduct').value.toLowerCase();
-  const list = barang.filter(b=>{
-    const okCat = catFilter==='Semua' || b.kategori===catFilter;
-    const okQ = !q || b.nama.toLowerCase().includes(q) || b.kode.toLowerCase().includes(q) || (b.barcode||'').toLowerCase().includes(q);
-    return okCat && okQ;
-  });
-  const grid = document.getElementById('productGrid');
-  grid.innerHTML = list.length ? list.map(b=>
-    '<div class="product-card">'+
-      '<div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem">'+
-        '<span class="badge">'+b.kategori+'</span>'+
-        '<span style="font-size:.72rem;color:var(--text-2);font-family:monospace">'+esc(b.kode)+'</span>'+
-      '</div>'+
-      '<div class="product-name">'+esc(b.nama)+'</div>'+
-      '<div class="product-price">'+rp(b.harga)+'</div>'+
-      '<div class="product-stock">'+(b.kategori==='Jasa'?'Selalu tersedia':'Stok: '+b.stok+' unit')+'</div>'+
-      '<div class="bc-box">'+codeHTML(b,{size:100})+'<span class="code-tag">'+(b.tipeKode==='QR'?'QR Code':'Barcode')+'</span></div>'+
-    '</div>').join('')
-    : '<p style="color:var(--text-2);padding:1rem">Tidak ada barang yang cocok dengan pencarian.</p>';
-  drawCodes(grid);
-}
-
-/* =========================================================
-   HALAMAN KASIR DIGITAL (TPS)
-   ========================================================= */
+/* ===================== KASIR ===================== */
 function renderKasirSelect(){
   document.getElementById('kasirBarang').innerHTML =
     '<option value="">Pilih Barang (manual)</option>' +
@@ -1045,12 +789,6 @@ function scanAdd(){
   drawCodes(box);
   inp.value=''; inp.focus();
 }
-function simulateScan(){
-  const b = barang[Math.floor(Math.random()*barang.length)];
-  document.getElementById('scanInput').value = b.barcode;
-  toast('Pemindai membaca kode '+b.barcode);
-  setTimeout(scanAdd,420);
-}
 function pushCart(b,qty){
   if(b.kategori!=='Jasa'){
     const inCart = (cart.find(c=>c.kode===b.kode)||{jumlah:0}).jumlah;
@@ -1076,7 +814,7 @@ function renderCart(){
     '<tr>'+
       '<td><strong>'+esc(c.nama)+'</strong><br><span style="font-size:.7rem;color:var(--text-2);font-family:monospace">'+c.kode+'</span></td>'+
       '<td><input type="number" min="1" value="'+c.jumlah+'" style="width:64px;padding:.32rem;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text)" onchange="updQty('+i+',this.value)"></td>'+
-      '<td>'+rp(c.harga)+'</td>'+
+      '<td style="font-weight:700">'+rp(c.harga)+'</td>'+
       '<td><strong>'+rp(c.subtotal)+'</strong></td>'+
       '<td><button class="btn btn-ghost btn-sm" onclick="removeFromCart('+i+')">Hapus</button></td>'+
     '</tr>').join('')
@@ -1084,12 +822,8 @@ function renderCart(){
   document.getElementById('cartTotal').textContent = rp(cart.reduce((s,c)=>s+c.subtotal,0));
   document.getElementById('cartCount').textContent = cart.reduce((s,c)=>s+c.jumlah,0);
 }
-function updQty(i,v){
-  cart[i].jumlah = Math.max(1, parseInt(v)||1);
-  cart[i].subtotal = cart[i].jumlah * cart[i].harga;
-  renderCart();
-}
-function saveTransaction(){
+function updQty(i,v){ cart[i].jumlah=Math.max(1,parseInt(v)||1); cart[i].subtotal=cart[i].jumlah*cart[i].harga; renderCart() }
+function checkout(){
   if(!cart.length){ toast('Keranjang masih kosong','err'); return }
   const total = cart.reduce((s,c)=>s+c.subtotal,0);
   const id = 'TRX'+String(trxCounter++).padStart(3,'0');
@@ -1104,38 +838,24 @@ function saveTransaction(){
   save();
   cart = [];
   renderCart(); renderHistory(); renderKasirSelect();
-  toast('Transaksi '+id+' tersimpan, total '+rp(total));
-  showReceipt(id, true);
+  toast('Checkout berhasil. Transaksi '+id+' tersimpan, total '+rp(total));
 }
 function renderHistory(){
   const list = transaksi.filter(t=>t.tanggal===TODAY).slice().reverse();
   const tot = list.reduce((s,t)=>s+t.total,0);
-  document.getElementById('histSub').textContent = list.length
-    ? list.length+' transaksi - total '+rp(tot) : 'Belum ada transaksi hari ini.';
+  document.getElementById('histSub').textContent = list.length ? list.length+' transaksi - total '+rp(tot) : 'Belum ada transaksi hari ini.';
   document.getElementById('transactionHistory').innerHTML = list.length ? list.map(t=>{
     const ds = detailTransaksi.filter(d=>d.id_transaksi===t.id);
     const txt = ds.map(d=>{ const b=barang.find(x=>x.kode===d.kode_barang); return (b?b.nama:d.kode_barang)+' x'+d.jumlah }).join(', ');
     return '<div class="tx">'+
       '<div class="tx-head"><span class="tx-id">'+t.id+'</span><span class="tx-time">'+t.tanggal+(t.jam?' - '+t.jam:'')+'</span></div>'+
       '<div class="tx-items">'+esc(txt)+'</div>'+
-      '<div class="tx-head"><span class="tx-total">'+rp(t.total)+'</span>'+
-      '<span style="display:flex;gap:.4rem;flex-wrap:wrap">'+
-        '<button class="btn btn-soft btn-sm" onclick="showReceipt(\''+t.id+'\')">Lihat Struk</button>'+
-        '<button class="btn btn-blue btn-sm" onclick="showReceipt(\''+t.id+'\',true)">Cetak</button>'+
-      '</span></div>'+
+      '<div class="tx-head"><span class="tx-total">'+rp(t.total)+'</span></div>'+
     '</div>';
   }).join('') : '<p style="color:var(--text-2);text-align:center;padding:2rem">Belum ada transaksi hari ini.</p>';
 }
-// Cetak langsung struk transaksi terakhir hari ini
-function printLastReceipt(){
-  const list = transaksi.filter(t=>t.tanggal===TODAY);
-  if(!list.length){ toast('Belum ada transaksi hari ini untuk dicetak','err'); return }
-  showReceipt(list[list.length-1].id, true);
-}
 
-/* =========================================================
-   CETAK STRUK DAN LABEL
-   ========================================================= */
+/* ===================== CETAK LABEL ===================== */
 function openPrint(html,title){
   document.getElementById('printArea').innerHTML = html;
   document.getElementById('printTitle').textContent = title;
@@ -1143,30 +863,6 @@ function openPrint(html,title){
   drawCodes(document.getElementById('printArea'));
 }
 function doPrint(){ setTimeout(function(){ window.print() },120) }
-function showReceipt(id, autoPrint){
-  const t = transaksi.find(x=>x.id===id);
-  if(!t){ toast('Transaksi tidak ditemukan','err'); return }
-  const ds = detailTransaksi.filter(d=>d.id_transaksi===id);
-  const rows = ds.map(d=>{
-    const b = barang.find(x=>x.kode===d.kode_barang);
-    return '<tr><td>'+esc(b?b.nama:d.kode_barang)+'<br><span style="font-size:10px">'+d.jumlah+' x '+rp(d.harga)+'</span></td><td class="r">'+rp(d.subtotal)+'</td></tr>';
-  }).join('');
-  openPrint(
-    '<div class="receipt">'+
-      '<h4>TOGA MAS</h4>'+
-      '<div class="c">Photocopy - ATK - Minuman</div>'+
-      '<div class="c">Jl. Kamizaibu, Merauke, Papua Selatan</div>'+
-      '<div class="c">WhatsApp 0812-XXXX-XXXX</div>'+
-      '<div class="c">Senin sampai Jumat: 08:00 - 16:00 WIT</div>'+
-      '<hr>'+
-      '<div style="font-size:11px">No : '+t.id+'<br>Tgl: '+t.tanggal+' '+(t.jam||'')+'<br>Kasir: Kasir 1</div>'+
-      '<hr><table>'+rows+'</table><hr>'+
-      '<table><tr><td class="tot">TOTAL</td><td class="r tot">'+rp(t.total)+'</td></tr></table><hr>'+
-      '<div class="bcwrap"><svg class="bc" data-bc="'+t.id+'" data-fmt="CODE128" data-h="38" data-w="1.5" data-pc="1" data-fs="11"></svg></div>'+
-      '<div class="c" style="margin-top:6px">Terima kasih atas kunjungan Anda</div>'+
-    '</div>','Pratinjau Struk - '+t.id);
-  if(autoPrint) setTimeout(function(){ window.print() },420);
-}
 function labelHTML(b){
   return '<div class="lbl">'+
     '<div class="sn">TOGA MAS UNMUS</div>'+
@@ -1190,9 +886,7 @@ function printAllLabels(){
     'Cetak Semua Label');
 }
 
-/* =========================================================
-   HALAMAN LAPORAN HARIAN (MIS)
-   ========================================================= */
+/* ===================== LAPORAN & RESET ===================== */
 let chartObj = null;
 function reportData(){
   const today = transaksi.filter(t=>t.tanggal===TODAY);
@@ -1211,7 +905,6 @@ function renderLaporan(){
   document.getElementById('statTrx').textContent = r.jmlTrx;
   document.getElementById('statItem').textContent = r.jmlItem;
   document.getElementById('statAvg').textContent = rp(r.avg);
-
   const max = Math.max(1,...Object.values(r.perCat));
   document.getElementById('categoryStats').innerHTML = r.cats.map(c=>
     '<div class="bar-row">'+
@@ -1220,8 +913,7 @@ function renderLaporan(){
       '<span class="vv">'+rp(r.perCat[c])+'</span>'+
     '</div>').join('') +
     '<div style="display:flex;justify-content:space-between;padding-top:.7rem;border-top:2px solid var(--border);margin-top:.4rem;font-weight:800">'+
-      '<span>TOTAL</span><span style="color:var(--blue)">'+rp(r.total)+'</span></div>';
-
+      '<span>TOTAL</span><span style="color:var(--text)">'+rp(r.total)+'</span></div>';
   const dark = document.body.getAttribute('data-theme')==='dark';
   const tc = dark?'#EAF2FB':'#0A2540', gc = dark?'#1B3550':'#EEF4FB';
   if(chartObj) chartObj.destroy();
@@ -1235,39 +927,18 @@ function renderLaporan(){
         y:{ticks:{color:tc,callback:v=>'Rp '+v.toLocaleString('id-ID')},grid:{color:gc},beginAtZero:true}}}
   });
 }
-function printReport(){
-  const r = reportData();
-  const rows = r.details.map(d=>{
-    const b = barang.find(x=>x.kode===d.kode_barang);
-    return '<tr><td style="border:1px solid #999;padding:5px">'+esc(b?b.nama:d.kode_barang)+'</td>'+
-      '<td style="border:1px solid #999;padding:5px;text-align:center">'+d.jumlah+'</td>'+
-      '<td style="border:1px solid #999;padding:5px;text-align:right">'+rp(d.harga)+'</td>'+
-      '<td style="border:1px solid #999;padding:5px;text-align:right">'+rp(d.subtotal)+'</td></tr>';
-  }).join('');
-  openPrint(
-  '<div style="font-family:Arial,sans-serif;color:#000;padding:16px">'+
-    '<h2 style="margin:0">TOGA MAS UNMUS MERAUKE</h2>'+
-    '<p style="margin:2px 0 10px;font-size:12px">Laporan Harian (MIS) - Tanggal: '+TODAY+' - Dicetak: '+new Date().toLocaleString('id-ID')+'</p>'+
-    '<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px">'+
-      '<tr><td style="border:1px solid #999;padding:6px"><b>Total Pemasukan</b><br>'+rp(r.total)+'</td>'+
-      '<td style="border:1px solid #999;padding:6px"><b>Jumlah Transaksi</b><br>'+r.jmlTrx+'</td>'+
-      '<td style="border:1px solid #999;padding:6px"><b>Barang Terjual</b><br>'+r.jmlItem+'</td>'+
-      '<td style="border:1px solid #999;padding:6px"><b>Rata-rata per Transaksi</b><br>'+rp(r.avg)+'</td></tr>'+
-    '</table>'+
-    '<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px">'+
-      '<tr style="background:#EAF3FF"><th style="border:1px solid #999;padding:6px;text-align:left">Kategori</th>'+
-      '<th style="border:1px solid #999;padding:6px;text-align:right">Pemasukan</th></tr>'+
-      r.cats.map(c=>'<tr><td style="border:1px solid #999;padding:6px">'+c+'</td><td style="border:1px solid #999;padding:6px;text-align:right">'+rp(r.perCat[c])+'</td></tr>').join('')+
-    '</table>'+
-    '<h3 style="font-size:13px;margin-bottom:6px">Rincian Penjualan</h3>'+
-    '<table style="width:100%;border-collapse:collapse;font-size:11px">'+
-      '<tr style="background:#EAF3FF"><th style="border:1px solid #999;padding:5px;text-align:left">Barang</th>'+
-      '<th style="border:1px solid #999;padding:5px">Jumlah</th>'+
-      '<th style="border:1px solid #999;padding:5px;text-align:right">Harga</th>'+
-      '<th style="border:1px solid #999;padding:5px;text-align:right">Subtotal</th></tr>'+
-      (rows || '<tr><td colspan="4" style="border:1px solid #999;padding:6px;text-align:center">Tidak ada data</td></tr>')+
-    '</table>'+
-  '</div>','Cetak Laporan Harian');
+/* Tombol Reset: menghapus laporan harian yang sudah ada sehingga laporan mulai dari awal */
+function resetLaporan(){
+  if(!transaksi.length && !detailTransaksi.length){ toast('Laporan harian sudah kosong','err'); return }
+  if(confirm('Reset laporan harian? Seluruh laporan yang sudah ada akan dihapus dan pencatatan laporan dimulai dari awal.')){
+    transaksi = [];
+    detailTransaksi = [];
+    trxCounter = 1;
+    save();
+    renderLaporan();
+    renderHistory();
+    toast('Laporan harian direset. Pencatatan dimulai dari awal.');
+  }
 }
 function exportCSV(){
   const r = reportData();
@@ -1284,13 +955,10 @@ function exportCSV(){
   toast('File CSV berhasil diunduh');
 }
 
-/* =========================================================
-   HALAMAN DSS
-   ========================================================= */
+/* ===================== DSS ===================== */
 function renderDSS(){
   const sold = {};
   detailTransaksi.forEach(d=>{ sold[d.kode_barang]=(sold[d.kode_barang]||0)+d.jumlah });
-
   const ranked = Object.entries(sold)
     .map(([kode,qty])=>({kode,qty,nama:(barang.find(b=>b.kode===kode)||{nama:kode}).nama}))
     .sort((a,b)=>b.qty-a.qty).slice(0,8);
@@ -1299,9 +967,7 @@ function renderDSS(){
         '<span class="rank-info"><span class="rank-nm">'+esc(r.nama)+'</span><br><span class="rank-kd">'+r.kode+'</span></span>'+
         '<span class="rank-qty">'+r.qty+' terjual</span></li>').join('')
     : '<li style="color:var(--text-2)">Belum ada data penjualan.</li>';
-
-  const stock = barang.filter(b=>b.kategori!=='Jasa');
-  const low = stock.filter(b=>b.stok<=10);
+  const low = barang.filter(b=>b.kategori!=='Jasa'&&b.stok<=10);
   document.getElementById('stockWarnings').innerHTML = low.length
     ? low.sort((a,b)=>a.stok-b.stok).map(b=>
       '<div class="alert '+(b.stok===0?'out':'')+'">'+
@@ -1309,11 +975,7 @@ function renderDSS(){
         '<div class="d">Kode '+b.kode+' - sisa stok '+b.stok+' unit - harga '+rp(b.harga)+'</div>'+
       '</div>').join('')
     : '<p style="color:var(--text-2);font-size:.9rem">Semua stok dalam kondisi aman, di atas 10 unit.</p>';
-
-  const reco = low.map(b=>{
-    const s = sold[b.kode]||0;
-    return {...b, terjual:s, saran:Math.max(s*2,20)};
-  }).sort((a,b)=>a.stok-b.stok);
+  const reco = low.map(b=>{ const s=sold[b.kode]||0; return {...b,terjual:s,saran:Math.max(s*2,20)} }).sort((a,b)=>a.stok-b.stok);
   document.getElementById('restockReco').innerHTML = reco.length
     ? reco.map(b=>
       '<div class="reco">'+
@@ -1324,21 +986,19 @@ function renderDSS(){
     : '<p style="color:var(--text-2);font-size:.9rem">Tidak ada rekomendasi restock saat ini.</p>';
 }
 
-/* =========================================================
-   HALAMAN DATA BARANG (CRUD + KODE BISA DIGANTI)
-   ========================================================= */
+/* ===================== DATA BARANG ===================== */
 function renderDataTable(){
   document.getElementById('dataTableBody').innerHTML = barang.map((b,i)=>{
     const cls = b.kategori==='Jasa' ? 's-ok' : (b.stok===0?'s-out':b.stok<=10?'s-low':'s-ok');
     const lbl = b.kategori==='Jasa' ? 'Tak terbatas' : (b.stok===0?'Habis':b.stok<=10?'Sisa '+b.stok:b.stok+' unit');
     return '<tr>'+
-      '<td><span class="mini-bc">'+codeHTML(b,{size:48,h:26,w:1,dv:false})+'</span>'+
+      '<td style="text-align:center"><span class="mini-bc">'+codeHTML(b,{size:48,h:26,w:1,dv:false})+'</span>'+
         '<div style="font-size:.66rem;color:var(--text-2);font-family:monospace;margin-top:2px;max-width:150px;overflow:hidden;text-overflow:ellipsis">'+esc(b.barcode)+'</div>'+
         '<div style="font-size:.62rem;color:var(--text-2);font-weight:700">'+(b.tipeKode==='QR'?'QR Code':'Barcode')+'</div></td>'+
       '<td style="font-family:monospace;font-weight:700">'+esc(b.kode)+'</td>'+
       '<td>'+esc(b.nama)+'</td>'+
-      '<td><span class="badge">'+b.kategori+'</span></td>'+
-      '<td style="font-weight:700;color:var(--blue)">'+rp(b.harga)+'</td>'+
+      '<td><span class="badge b-'+b.kategori+'">'+b.kategori+'</span></td>'+
+      '<td style="font-weight:700;color:var(--text)">'+rp(b.harga)+'</td>'+
       '<td><span class="stock-pill '+cls+'">'+lbl+'</span></td>'+
       '<td style="white-space:nowrap">'+
         '<button class="btn btn-soft btn-sm" onclick="printLabel(\''+b.kode+'\')" title="Cetak label">Label</button> '+
@@ -1370,21 +1030,17 @@ function openBarangModal(idx){
   document.getElementById('barangModal').classList.add('on');
   renderPreview();
 }
-// Pratinjau barcode atau QR di dalam form
 function renderPreview(){
   const wrap = document.getElementById('modalBcWrap');
   const val = document.getElementById('inputBarcode').value.trim();
   const tipe = document.getElementById('inputTipe').value;
   const lc = getComputedStyle(document.body).getPropertyValue('--bc').trim()||'#0A2540';
   wrap.innerHTML='';
-  if(!val){
-    wrap.innerHTML = '<span style="font-size:.8rem;color:#5A7A99">Nomor barcode atau QR Code belum diisi</span>';
-    return;
-  }
+  if(!val){ wrap.innerHTML='<span style="font-size:.8rem;color:#5A7A99">Nomor barcode atau QR Code belum diisi</span>'; return }
   if(tipe==='QR'){
-    const cv = document.createElement('canvas');
-    cv.className='qr'; wrap.appendChild(cv);
-    drawQR(cv,val,116,lc);
+    const img = document.createElement('img');
+    img.className='qr'; wrap.appendChild(img);
+    drawQRImg(img,val,116,lc);
   }else{
     const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
     wrap.appendChild(svg);
@@ -1392,10 +1048,9 @@ function renderPreview(){
   }
   const tag = document.createElement('span');
   tag.className='code-tag';
-  tag.textContent = (tipe==='QR'?'QR Code':'Barcode') + ' - ' + val;
+  tag.textContent = (tipe==='QR'?'QR Code':'Barcode')+' - '+val;
   wrap.appendChild(tag);
 }
-// Buat ulang nomor kode sesuai jenis yang dipilih
 function regenCode(){
   const tipe = document.getElementById('inputTipe').value;
   const kode = document.getElementById('inputKode').value.trim() || ('BRG'+Date.now());
@@ -1411,10 +1066,7 @@ function onTipeChange(){
   if(tipe==='BARCODE' && !/^\d+$/.test(cur)) document.getElementById('inputBarcode').value = genBarcode(kode+'_'+Date.now());
   renderPreview();
 }
-function onKodeChange(){
-  const inp = document.getElementById('inputBarcode');
-  if(!inp.value.trim()) regenCode();
-}
+function onKodeChange(){ const inp=document.getElementById('inputBarcode'); if(!inp.value.trim()) regenCode() }
 function saveBarang(){
   const idx = parseInt(document.getElementById('editIndex').value);
   const kode = document.getElementById('inputKode').value.trim().toUpperCase();
@@ -1428,9 +1080,7 @@ function saveBarang(){
   if(harga<=0){ toast('Harga harus lebih dari nol','err'); return }
   if(barang.some((b,i)=>b.kode===kode && i!==idx)){ toast('Kode barang sudah dipakai','err'); return }
   if(!barcode) barcode = tipeKode==='QR' ? genQR(kode) : genBarcode(kode+'_'+Date.now());
-  if(barang.some((b,i)=>String(b.barcode).toLowerCase()===barcode.toLowerCase() && i!==idx)){
-    toast('Nomor barcode atau QR sudah dipakai barang lain','err'); return;
-  }
+  if(barang.some((b,i)=>String(b.barcode).toLowerCase()===barcode.toLowerCase() && i!==idx)){ toast('Nomor barcode atau QR sudah dipakai barang lain','err'); return }
   if(kategori==='Jasa') stok = 9999;
   if(idx>=0) barang[idx] = {kode,nama,kategori,harga,stok,barcode,tipeKode};
   else barang.push({kode,nama,kategori,harga,stok,barcode,tipeKode});
@@ -1438,9 +1088,7 @@ function saveBarang(){
   toast(idx>=0?'Data barang diperbarui':'Barang berhasil ditambahkan');
 }
 function deleteBarang(i){
-  if(confirm('Hapus barang "'+barang[i].nama+'"?')){
-    barang.splice(i,1); save(); renderDataTable(); toast('Barang telah dihapus');
-  }
+  if(confirm('Hapus barang "'+barang[i].nama+'"?')){ barang.splice(i,1); save(); renderDataTable(); toast('Barang telah dihapus') }
 }
 function resetData(){
   if(confirm('Kembalikan seluruh data ke data awal? Transaksi baru akan dihapus.')){
@@ -1453,26 +1101,21 @@ function resetData(){
   }
 }
 
-/* =========================================================
-   HALAMAN PROFIL KELOMPOK 2
-   ========================================================= */
+/* ===================== PROFIL ===================== */
 function renderTeam(){
   document.getElementById('teamGrid').innerHTML = TEAM.map(m=>{
     const ini = m.nama.split(' ').filter(w=>w.length>1).map(w=>w[0]).join('').substring(0,2).toUpperCase();
     return '<div class="team-card">'+
+      '<span class="member-role">'+m.role+'</span>'+
       '<div class="avatar">'+ini+'</div>'+
       '<div class="member-name">'+esc(m.nama)+'</div>'+
       '<div class="member-npm">NPM: '+m.npm+'</div>'+
-      '<span class="member-role">'+m.role+'</span>'+
     '</div>';
   }).join('');
 }
 
-/* =========================================================
-   INISIALISASI
-   ========================================================= */
+/* ===================== INIT ===================== */
 save();
-renderProducts();
 renderTeam();
 renderKasirSelect();
 renderCart();
